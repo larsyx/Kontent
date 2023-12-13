@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+import 'package:kontent/kontentPages/kontent_video_player.dart';
 
 enum KontentCarouselType { featured, horizontal, vertical }
 
@@ -26,11 +27,18 @@ class _KontentCarouselSingleItem extends StatelessWidget {
       items: [1, 2, 3, 4, 5].map((i) {
         return Builder(
           builder: (BuildContext context) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.symmetric(horizontal: 5.0),
-              decoration: const BoxDecoration(color: Colors.black),
-              child: null,
+            return InkWell(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const KontentVideoPlayer()),
+              ),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                decoration: const BoxDecoration(color: Colors.black),
+                child: null,
+              ),
             );
           },
         );
@@ -61,11 +69,18 @@ class _KontentCarouselMultipleItem extends StatelessWidget {
               flex: 1,
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 5),
-                child: Container(
-                  color: Colors.black,
-                  height: carouselTypeToCarouselHeight[
-                      KontentCarouselType.vertical],
-                  child: null,
+                child: InkWell(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const KontentVideoPlayer()),
+                  ),
+                  child: Container(
+                    color: Colors.black,
+                    height: carouselTypeToCarouselHeight[
+                        KontentCarouselType.vertical],
+                    child: null,
+                  ),
                 ),
               ),
             );

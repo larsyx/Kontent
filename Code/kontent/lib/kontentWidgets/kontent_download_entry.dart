@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:kontent/entities/item.dart';
 
 class KontentDownloadEntry extends StatelessWidget {
-  const KontentDownloadEntry({super.key});
+  final Item item;
+
+  const KontentDownloadEntry({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -17,28 +20,28 @@ class KontentDownloadEntry extends StatelessWidget {
             margin: const EdgeInsets.only(left: 20, right: 20),
             decoration: const BoxDecoration(color: Colors.black),
           ),
-          const SizedBox(
+          SizedBox(
             height: 170,
             width: 240,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 verticalDirection: VerticalDirection.down,
                 children: <Widget>[
                   Text(
-                    'Titolo1',
-                    style: TextStyle(
+                    item.titolo,
+                    style: const TextStyle(
                       fontSize: 25,
                     ),
                   ),
                   Flexible(
                     fit: FlexFit.tight,
                     child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                      item.descrizione,
                       overflow: TextOverflow.fade,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15,
                       ),
                     ),

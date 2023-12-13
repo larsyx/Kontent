@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kontent/examples/examples.dart';
+import 'package:standard_searchbar/old/standard_searchbar.dart';
 
 class KontentSearchPageBodyWidget extends StatelessWidget {
   const KontentSearchPageBodyWidget({
@@ -14,46 +16,23 @@ class KontentSearchPageBodyWidget extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: SearchAnchor(
-                builder: (BuildContext context, SearchController controller) {
-              return SearchBar(
-                shape: const MaterialStatePropertyAll(LinearBorder()),
-                controller: controller,
-                padding: const MaterialStatePropertyAll<EdgeInsets>(
-                    EdgeInsets.symmetric(horizontal: 16.0)),
-                onTap: () {
-                  controller.openView();
-                },
-                onChanged: (_) {
-                  controller.openView();
-                },
-                leading: const Icon(Icons.search),
-              );
-            }, suggestionsBuilder:
-                    (BuildContext context, SearchController controller) {
-              return List<ListTile>.generate(5, (int index) {
-                final String item = 'item $index';
-                return ListTile(
-                  title: Text(item),
-                  onTap: () {
-                    // setState(() {
-                    //   controller.closeView(item);
-                    // });
-                  },
-                );
-              });
-            }),
+            child: StandardSearchBar(
+              onChanged: (p0) => null,
+              onSubmitted: (p0) => null,
+              borderRadius: 0,
+              startIconSize: 35,
+              textStyle: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            children: const <Widget>[
-              ListTitleEntry(data: 'Commedia'),
-              ListTitleEntry(data: 'Thriller'),
-              ListTitleEntry(data: 'Horror'),
-              ListTitleEntry(data: 'Azione'),
-              ListTitleEntry(data: 'Fantasy'),
-            ],
+            children: Examples.exampleGenresList
+                .map((e) => ListTitleEntry(data: e))
+                .toList(),
           )
         ],
       ),
@@ -79,4 +58,6 @@ class ListTitleEntry extends StatelessWidget {
       ),
     );
   }
+
+  // onTap
 }

@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:kontent/examples/examples.dart';
 import 'package:kontent/kontentPages/kontent_account_page.dart';
 import 'package:kontent/kontentPages/kontent_downloads_page.dart';
 import 'package:kontent/kontentPages/kontent_home_page.dart';
 import 'package:kontent/kontentPages/kontent_search_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:media_kit/media_kit.dart'; // Provides [Player], [Media], [Playlist] etc.
 
-void main() {
+final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  MediaKit.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const Kontent());
 }
 
@@ -23,6 +32,7 @@ class Kontent extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const KontentMainWidget(title: 'Kontent'),
+      navigatorObservers: [routeObserver],
     );
   }
 }
@@ -37,12 +47,12 @@ class KontentMainWidget extends StatefulWidget {
 }
 
 class _KontentMainWidgetState extends State<KontentMainWidget> {
-  int _selectedIndex = 1;
-  static const _pages = <Widget>[
-    KontentHomePageBodyWidget(),
-    KontentSearchPageBodyWidget(),
-    KontentDownloadPageBodyWidget(),
-    KontentAccountPageBodyWidget(),
+  int _selectedIndex = 0;
+  static final List<Widget> _pages = <Widget>[
+    const KontentHomePageBodyWidget(),
+    const KontentSearchPageBodyWidget(),
+    KontentDownloadPageBodyWidget(itemList: Examples.exampleDownloadList),
+    const KontentAccountPageBodyWidget(),
   ];
 
   @override

@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:kontent/entities/item.dart';
 import 'package:kontent/kontentWidgets/kontent_download_entry.dart';
 
 class KontentDownloadPageBodyWidget extends StatelessWidget {
-  const KontentDownloadPageBodyWidget({
-    super.key,
-  });
+  final List<Item> itemList;
+
+  const KontentDownloadPageBodyWidget({super.key, required this.itemList});
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            KontentDownloadEntry(),
-            KontentDownloadEntry(),
-            KontentDownloadEntry(),
-            KontentDownloadEntry(),
-            KontentDownloadEntry(),
-            KontentDownloadEntry(),
-          ],
+          children: itemList
+              .map((e) => KontentDownloadEntry(
+                    item: Item(
+                      id: e.id,
+                      titolo: e.titolo,
+                      descrizione: e.descrizione,
+                    ),
+                  ))
+              .toList(),
         ),
       ),
     );
