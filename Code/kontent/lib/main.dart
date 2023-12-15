@@ -4,6 +4,7 @@ import 'package:kontent/kontentPages/kontent_downloads_page.dart';
 import 'package:kontent/kontentPages/kontent_home_page.dart';
 import 'package:kontent/kontentPages/kontent_search_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kontent/kontentPages/kontent_start_page.dart';
 
 void main() {
   runApp(const Kontent());
@@ -11,6 +12,7 @@ void main() {
 
 class Kontent extends StatelessWidget {
   const Kontent({super.key});
+  final isLogged = false;
 
   // This widget is the root of your application.
   @override
@@ -22,7 +24,9 @@ class Kontent extends StatelessWidget {
         textTheme: GoogleFonts.comfortaaTextTheme(),
         useMaterial3: true,
       ),
-      home: const KontentMainWidget(title: 'Kontent'),
+      home: isLogged
+          ? const KontentMainWidget(title: 'Kontent')
+          : const KontentStartPageWidget(),
     );
   }
 }
@@ -37,7 +41,7 @@ class KontentMainWidget extends StatefulWidget {
 }
 
 class _KontentMainWidgetState extends State<KontentMainWidget> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
   static const _pages = <Widget>[
     KontentHomePageBodyWidget(),
     KontentSearchPageBodyWidget(),
