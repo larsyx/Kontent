@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kontent/kontentPages/kontent_forgotten_password_.dart';
+import 'package:kontent/kontentPages/intro/kontent_forgotten_password_.dart';
 import 'package:kontent/kontentWidgets/kontent_button.dart';
 import 'kontent_registration_page.dart';
-import '../main.dart';
+import '../../main.dart';
 
 class KontentLoginPageWidget extends StatefulWidget {
   const KontentLoginPageWidget({

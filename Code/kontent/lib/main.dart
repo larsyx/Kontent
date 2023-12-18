@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kontent/examples/examples.dart';
-import 'package:kontent/kontentPages/kontent_account_page.dart';
-import 'package:kontent/kontentPages/kontent_downloads_page.dart';
-import 'package:kontent/kontentPages/kontent_home_page.dart';
-import 'package:kontent/kontentPages/kontent_search_page.dart';
+import 'package:kontent/kontentPages/home/kontent_account_page.dart';
+import 'package:kontent/kontentPages/home/kontent_downloads_page.dart';
+import 'package:kontent/kontentPages/home/kontent_home_page.dart';
+import 'package:kontent/kontentPages/home/kontent_search_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:media_kit/media_kit.dart'; // Provides [Player], [Media], [Playlist] etc.
-import 'package:kontent/kontentPages/kontent_start_page.dart';
+import 'package:kontent/kontentPages/intro/kontent_start_page.dart';
 
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 Future<void> main() async {

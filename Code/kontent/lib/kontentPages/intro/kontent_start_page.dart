@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kontent/kontentPages/kontent_login_page.dart';
-import 'package:kontent/kontentPages/kontent_registration_page.dart';
+import 'package:kontent/kontentPages/intro/kontent_login_page.dart';
+import 'package:kontent/kontentPages/intro/kontent_registration_page.dart';
 import 'package:kontent/kontentWidgets/kontent_button.dart';
 
 class KontentStartPageWidget extends StatelessWidget {
