@@ -7,6 +7,7 @@ import 'package:kontent/kontentPages/kontent_home_page.dart';
 import 'package:kontent/kontentPages/kontent_search_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:media_kit/media_kit.dart'; // Provides [Player], [Media], [Playlist] etc.
+import 'package:kontent/kontentPages/kontent_start_page.dart';
 
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 Future<void> main() async {
@@ -20,6 +21,7 @@ Future<void> main() async {
 
 class Kontent extends StatelessWidget {
   const Kontent({super.key});
+  final isLogged = false;
 
   // This widget is the root of your application.
   @override
@@ -31,7 +33,9 @@ class Kontent extends StatelessWidget {
         textTheme: GoogleFonts.comfortaaTextTheme(),
         useMaterial3: true,
       ),
-      home: const KontentMainWidget(title: 'Kontent'),
+      home: isLogged
+          ? const KontentMainWidget(title: 'Kontent')
+          : const KontentStartPageWidget(),
       navigatorObservers: [routeObserver],
     );
   }
