@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "984998531045",
+    "project_id": "kontent-db",
+    "storage_bucket": "kontent-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984998531045:android:9467ca7d9015aba9b7a90c",
+        "android_client_info": {
+          "package_name": "com.example.kontent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq6fQ8oE7sfHO4FZzc4riBezn-ocbtpFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,26 +1,170 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:kontent/kontentWidgets/kontent_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class KontentRegistrationPageWidget extends StatefulWidget {
   const KontentRegistrationPageWidget({super.key});
 
   @override
-  State<StatefulWidget> createState() => __KontentRegistrationPageState();
+  State<KontentRegistrationPageWidget> createState() =>
+      _KontentRegistrationPageState();
 }
 
-class __KontentRegistrationPageState
+class _KontentRegistrationPageState
     extends State<KontentRegistrationPageWidget> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
+  var _enteredEmail = '';
+  var _enteredPassword = '';
 
   var isObscure = true;
 
+  void _submitForm() async {
+    final isValid = _formKey.currentState!.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+    try {
+      await _firebase.createUserWithEmailAndPassword(
+        email: _enteredEmail,
+        password: _enteredPassword,
+      );
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        //...
+      }
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message ?? 'Auth falied.'),
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("Kontent"),
+          backgroundColor: Theme.of(context).primaryColor,
+          foregroundColor: Colors.white,
+          titleTextStyle:
+              const TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+        ),
+        body: Padding(
+            padding: const EdgeInsets.all(16),
+            child: SingleChildScrollView(
+              child: Column(children: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.all(30),
+                  child: Text(
+                    'Registrazione',
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: TextFormField(
+                          controller: usernameController,
+                          decoration: const InputDecoration(
+                            labelText: 'Username',
+                            border: OutlineInputBorder(),
+                          ),
+                          validator: validateUsername,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: TextFormField(
+                          controller: emailController,
+                          decoration: const InputDecoration(
+                            labelText: 'Email',
+                            border: OutlineInputBorder(),
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          validator: validateEmail,
+                          onSaved: (value) {
+                            _enteredEmail = value!;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: TextFormField(
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            border: const OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                                icon: Icon(
+                                  isObscure
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    isObscure = !isObscure;
+                                  });
+                                }),
+                          ),
+                          validator: validatePassword,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: isObscure,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: TextFormField(
+                          controller: confirmPasswordController,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            border: const OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                                icon: Icon(
+                                  isObscure
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    isObscure = !isObscure;
+                                  });
+                                }),
+                          ),
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: isObscure,
+                          validator: validateConfirmPassword,
+                          onSaved: (value) {
+                            _enteredPassword = value!;
+                          },
+                        ),
+                      ),
+                      KontentButton(onPressed: _submitForm, text: "Registrati")
+                    ],
+                  ),
+                ),
+              ]),
+            )));
+  }
+
+  //Function validate
   String? validateUsername(String? value) {
     if (value == null || value.isEmpty) {
       return 'inserisci una username';
@@ -56,121 +200,11 @@ class __KontentRegistrationPageState
     if (value == null || value.isEmpty) {
       return 'Conferma la password';
     } else {
-      if (_passwordController.text != value) {
+      if (passwordController.text != value) {
         return 'Le password non coincidono';
       } else {
         return null;
       }
     }
-  }
-
-  void submitForm() {
-    if (_formKey.currentState?.validate() ?? false) {
-      // Invia i dati al server
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Kontent"),
-          backgroundColor: Theme.of(context).primaryColor,
-          foregroundColor: Colors.white,
-          titleTextStyle:
-              const TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-        ),
-        body: Padding(
-            padding: const EdgeInsets.all(16),
-            child: SingleChildScrollView(
-              child: Column(children: <Widget>[
-                const Padding(
-                  padding: EdgeInsets.all(30),
-                  child: Text(
-                    'Registrazione',
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: TextFormField(
-                          controller: _usernameController,
-                          decoration: const InputDecoration(
-                            labelText: 'Username',
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: validateUsername,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: TextFormField(
-                          controller: _emailController,
-                          decoration: const InputDecoration(
-                            labelText: 'Email',
-                            border: OutlineInputBorder(),
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          validator: validateEmail,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: TextFormField(
-                          controller: _passwordController,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            border: const OutlineInputBorder(),
-                            suffixIcon: IconButton(
-                                icon: Icon(
-                                  isObscure
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    isObscure = !isObscure;
-                                  });
-                                }),
-                          ),
-                          validator: validatePassword,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: isObscure,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: TextFormField(
-                          controller: _confirmPasswordController,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            border: const OutlineInputBorder(),
-                            suffixIcon: IconButton(
-                                icon: Icon(
-                                  isObscure
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    isObscure = !isObscure;
-                                  });
-                                }),
-                          ),
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: isObscure,
-                          validator: validateConfirmPassword,
-                        ),
-                      ),
-                      KontentButton(onPressed: submitForm, text: "Registrati")
-                    ],
-                  ),
-                ),
-              ]),
-            )));
   }
 }

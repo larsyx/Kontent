@@ -1,13 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kontent/kontentPages/intro/kontent_forgotten_password_.dart';
 import 'package:kontent/kontentWidgets/kontent_button.dart';
 import 'kontent_registration_page.dart';
-import '../../main.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class KontentLoginPageWidget extends StatefulWidget {
-  const KontentLoginPageWidget({
-    super.key,
-  });
+  const KontentLoginPageWidget({super.key});
 
   @override
   State<KontentLoginPageWidget> createState() => _KontentLoginPageState();
@@ -18,14 +18,35 @@ class _KontentLoginPageState extends State<KontentLoginPageWidget> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  var _enteredEmail = '';
+  var _enteredPassword = '';
+
   var isObscure = true;
 
-  void submitForm() {
-    // Invia i dati al server
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const KontentMainWidget(title: 'Kontent')));
+  void _submitForm() async {
+    final isValid = _formKey.currentState!.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+
+    try {
+      await _firebase.signInWithEmailAndPassword(
+          email: _enteredEmail, password: _enteredPassword);
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        // ...
+      }
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message ?? 'User not found.'),
+        ),
+      );
+    }
   }
 
   @override
@@ -57,6 +78,9 @@ class _KontentLoginPageState extends State<KontentLoginPageWidget> {
                         labelText: 'Email',
                       ),
                       keyboardType: TextInputType.emailAddress,
+                      onSaved: (value) {
+                        _enteredEmail = value!;
+                      },
                     ),
                   ),
                   Padding(
@@ -81,6 +105,9 @@ class _KontentLoginPageState extends State<KontentLoginPageWidget> {
                       ),
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: isObscure,
+                      onSaved: (value) {
+                        _enteredPassword = value!;
+                      },
                     ),
                   ),
                   TextButton(
@@ -97,7 +124,7 @@ class _KontentLoginPageState extends State<KontentLoginPageWidget> {
                       style: TextStyle(fontSize: 15),
                     ),
                   ),
-                  KontentButton(onPressed: submitForm, text: 'Accedi'),
+                  KontentButton(onPressed: _submitForm, text: 'Accedi'),
                   Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: Row(

@@ -1,13 +1,12 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kontent/kontentWidgets/kontent_carousel.dart';
 import 'package:kontent/kontentWidgets/kontent_change_password_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 
 class KontentAccountPageBodyWidget extends StatefulWidget {
-  const KontentAccountPageBodyWidget({
-    Key? key,
-  }) : super(key: key);
+  const KontentAccountPageBodyWidget({super.key});
 
   @override
   _KontentAccountPageBodyWidgetState createState() =>
@@ -18,16 +17,18 @@ class _KontentAccountPageBodyWidgetState
     extends State<KontentAccountPageBodyWidget> {
   ImagePicker _imagePicker = ImagePicker();
   XFile? _imageFile;
+  String userEmail = '';
 
   @override
   void initState() {
     super.initState();
+    getEmail();
     _imagePicker = ImagePicker();
   }
 
   Future<void> _getImage() async {
     final XFile? pickedImage =
-        await _imagePicker.pickImage(source: ImageSource.gallery);
+        await _imagePicker.pickImage(source: ImageSource.camera, preferredCameraDevice: CameraDevice.front);
 
     if (pickedImage != null) {
       setState(() {
@@ -40,6 +41,20 @@ class _KontentAccountPageBodyWidgetState
     setState(() {
       _imageFile = null;
     });
+  }
+
+  Future<void> getEmail() async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      setState(() {
+        userEmail = user.email ?? 'Nessuna email disponibile';
+      });
+    } else {
+      setState(() {
+        userEmail = 'L\'utente non è autenticato';
+      });
+    }
   }
 
   @override
@@ -93,7 +108,7 @@ class _KontentAccountPageBodyWidgetState
                       ),
                     ),
                   ),
-              ], 
+              ],
             ),
             const SizedBox(height: 20),
             const Column(
@@ -110,7 +125,7 @@ class _KontentAccountPageBodyWidgetState
                   height: 10,
                 ),
                 Text(
-                  'email@example.com',
+                  "example@example.it",
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.grey,
@@ -134,6 +149,7 @@ class _KontentAccountPageBodyWidgetState
             ElevatedButton(
               onPressed: () {
                 // Implement logout features
+                FirebaseAuth.instance.signOut();
               },
               child: const Text("Logout"),
             ),

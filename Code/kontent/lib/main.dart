@@ -1,16 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kontent/examples/examples.dart';
+import 'package:kontent/firebase_options.dart';
 import 'package:kontent/kontentPages/home/kontent_account_page.dart';
 import 'package:kontent/kontentPages/home/kontent_downloads_page.dart';
 import 'package:kontent/kontentPages/home/kontent_home_page.dart';
 import 'package:kontent/kontentPages/home/kontent_search_page.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:media_kit/media_kit.dart'; // Provides [Player], [Media], [Playlist] etc.
 import 'package:kontent/kontentPages/intro/kontent_start_page.dart';
+import 'package:media_kit/media_kit.dart'; // Provides [Player], [Media], [Playlist] etc.
 
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   WidgetsFlutterBinding.ensureInitialized();
   MediaKit.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
@@ -33,9 +40,21 @@ class Kontent extends StatelessWidget {
         textTheme: GoogleFonts.comfortaaTextTheme(),
         useMaterial3: true,
       ),
-      home: isLogged
+      home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: ((ctx, snapshot) {
+            if(snapshot.connectionState == ConnectionState.waiting){
+              //to create a splash screen to loading
+            }
+            if (snapshot.hasData) {
+              return const KontentMainWidget(title: 'Kontent');
+            }
+            return const KontentStartPageWidget();
+          })),
+
+      /* isLogged
           ? const KontentMainWidget(title: 'Kontent')
-          : const KontentStartPageWidget(),
+          : const KontentStartPageWidget(), */
       navigatorObservers: [routeObserver],
     );
   }
