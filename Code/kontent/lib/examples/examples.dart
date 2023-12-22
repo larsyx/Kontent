@@ -1,30 +1,46 @@
-import 'package:kontent/entities/item.dart';
+import 'package:kontent/entities/content.dart';
 
 class Examples {
-  static final List<Item> exampleDownloadList = [
-    Item(
-      id: 0,
-      titolo: 'Shrek 1',
-      descrizione: 'Lorem Ipsum dolor sic amet',
+  static final List<Content> exampleDownloadList = [
+    Content(
+      id: '0',
+      title: 'Shrek 1',
+      description: 'Lorem Ipsum dolor sic amet',
+      thumbnail: '',
+      genre: '',
+      duration: 0,
     ),
-    Item(
-      id: 0,
-      titolo: 'Shrek 2',
-      descrizione: 'Lorem Ipsum dolor sic amet',
+    Content(
+      id: '0',
+      title: 'Shrek 2',
+      description: 'Lorem Ipsum dolor sic amet',
+      thumbnail: '',
+      genre: '',
+      duration: 0,
     ),
-    Item(
-        id: 0,
-        titolo: 'Shrek Terzo',
-        descrizione: 'Lorem Ipsum dolor sic amet'),
-    Item(
-      id: 0,
-      titolo: 'Ice Age',
-      descrizione: 'Lorem Ipsum dolor sic amet',
+    Content(
+      id: '0',
+      title: 'Shrek Terzo',
+      description: 'Lorem Ipsum dolor sic amet',
+      thumbnail: '',
+      genre: '',
+      duration: 0,
     ),
-    Item(
-      id: 0,
-      titolo: 'Perfetti Sconosciuti',
-      descrizione: 'Lorem Ipsum dolor sic amet',
+    Content(
+      id: '0',
+      title: 'Ice Age',
+      description: 'Lorem Ipsum dolor sic amet',
+      thumbnail: '',
+      genre: '',
+      duration: 0,
+    ),
+    Content(
+      id: '0',
+      title: 'Perfetti Sconosciuti',
+      description: 'Lorem Ipsum dolor sic amet',
+      thumbnail: '',
+      genre: '',
+      duration: 0,
     ),
   ];
 

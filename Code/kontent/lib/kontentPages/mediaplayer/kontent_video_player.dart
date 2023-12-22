@@ -47,7 +47,6 @@ class KontentVideoPlayerState extends State<KontentVideoPlayer>
               topButtonBar: [
                 MaterialCustomButton(
                   onPressed: () {
-                    print('Ciao');
                     Navigator.pop(context);
                   },
                   icon: const Icon(Icons.arrow_back_ios),

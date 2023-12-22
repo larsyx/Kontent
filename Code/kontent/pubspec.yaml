@@ -28,7 +28,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  email_validator: '^2.1.16'
+  http: ^1.1.2
+  email_validator: ^2.1.16
   flutter_carousel_widget: ^2.2.0
   standard_searchbar: ^2.1.1
   flutter:

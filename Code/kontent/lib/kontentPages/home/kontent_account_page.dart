@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:kontent/entities/carousel.dart';
+import 'package:kontent/entities/content.dart';
 import 'package:kontent/kontentWidgets/kontent_carousel.dart';
 import 'package:kontent/kontentWidgets/kontent_change_password_dialog.dart';
 import 'package:image_picker/image_picker.dart';
@@ -93,7 +95,7 @@ class _KontentAccountPageBodyWidgetState
                       ),
                     ),
                   ),
-              ], 
+              ],
             ),
             const SizedBox(height: 20),
             const Column(
@@ -126,9 +128,13 @@ class _KontentAccountPageBodyWidgetState
               child: const Text('Change Password'),
             ),
             const SizedBox(height: 20),
-            const KontentCarouselWrapper(
-              title: "Recently viewed",
-              type: KontentCarouselType.horizontal,
+            KontentCarouselWrapper(
+              carousel: Carousel(
+                  id: '',
+                  title: 'Recently viewed',
+                  type: '',
+                  orientation: KontentCarouselType.vertical,
+                  items: List<Content>.empty()),
             ),
             const SizedBox(height: 50),
             ElevatedButton(
