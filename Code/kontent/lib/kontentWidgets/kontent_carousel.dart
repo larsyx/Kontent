@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+import 'package:kontent/entities/carousel.dart';
+import 'package:kontent/entities/content.dart';
 import 'package:kontent/kontentPages/mediaplayer/kontent_series_detail_page.dart';
 import 'package:kontent/kontentPages/mediaplayer/kontent_video_player.dart';
 
@@ -12,20 +14,19 @@ final carouselTypeToCarouselHeight = <KontentCarouselType, double>{
 };
 
 class _KontentCarouselSingleItem extends StatelessWidget {
-  final KontentCarouselType type;
-  final String title;
+  final Carousel carousel;
 
-  const _KontentCarouselSingleItem({required this.type, required this.title});
+  const _KontentCarouselSingleItem({required this.carousel});
 
   @override
   Widget build(BuildContext context) {
     return FlutterCarousel(
       options: CarouselOptions(
-        height: carouselTypeToCarouselHeight[type],
+        height: carouselTypeToCarouselHeight[carousel.getOrientation],
         showIndicator: true,
         slideIndicator: const CircularSlideIndicator(),
       ),
-      items: [1, 2, 3, 4, 5].map((i) {
+      items: carousel.getItems.map<Widget>((Content i) {
         return Builder(
           builder: (BuildContext context) {
             return InkWell(
@@ -40,7 +41,10 @@ class _KontentCarouselSingleItem extends StatelessWidget {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                decoration: const BoxDecoration(color: Colors.black),
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    image: DecorationImage(
+                        image: NetworkImage(i.thumbnail), fit: BoxFit.cover)),
                 child: null,
               ),
             );
@@ -52,7 +56,9 @@ class _KontentCarouselSingleItem extends StatelessWidget {
 }
 
 class _KontentCarouselMultipleItem extends StatelessWidget {
-  const _KontentCarouselMultipleItem();
+  final Carousel carousel;
+
+  const _KontentCarouselMultipleItem({required this.carousel});
 
   @override
   Widget build(BuildContext context) {
@@ -63,45 +69,43 @@ class _KontentCarouselMultipleItem extends StatelessWidget {
         showIndicator: true,
         slideIndicator: CircularStaticIndicator(),
       ),
-      itemCount: 3,
+      itemCount: carousel.items.length,
       itemBuilder: (context, index, realIdx) {
-        final first = index * 2;
-        final second = first + 1;
-        return Row(
-          children: [first, second].map((idx) {
-            return Expanded(
-              flex: 1,
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5),
-                child: InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const KontentVideoPlayer()),
-                  ),
-                  child: Container(
-                    color: Colors.black,
-                    height: carouselTypeToCarouselHeight[
-                        KontentCarouselType.vertical],
-                    child: null,
+        final item = carousel.items[index];
+        return Row(children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 5),
+              child: InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const KontentVideoPlayer()),
+                ),
+                child: Container(
+                  color: Colors.black,
+                  height: carouselTypeToCarouselHeight[
+                      KontentCarouselType.vertical],
+                  child: Image.network(
+                    item.thumbnail,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
-            );
-          }).toList(),
-        );
+            ),
+          )
+        ]);
       },
     );
   }
 }
 
 class KontentCarouselWrapper extends StatelessWidget {
-  final String title;
-  final KontentCarouselType type;
+  final Carousel carousel;
 
   const KontentCarouselWrapper({
-    required this.title,
-    required this.type,
+    required this.carousel,
     super.key,
   });
 
@@ -116,13 +120,17 @@ class KontentCarouselWrapper extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.symmetric(horizontal: 25),
               child: Text(
-                title,
+                carousel.title,
                 style: const TextStyle(fontSize: 30),
               ),
             ),
-            type == KontentCarouselType.vertical
-                ? const _KontentCarouselMultipleItem()
-                : _KontentCarouselSingleItem(type: type, title: title)
+            carousel.orientation == KontentCarouselType.vertical
+                ? _KontentCarouselMultipleItem(
+                    carousel: carousel,
+                  )
+                : _KontentCarouselSingleItem(
+                    carousel: carousel,
+                  )
           ]),
     );
   }

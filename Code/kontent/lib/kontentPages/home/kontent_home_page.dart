@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kontent/entities/carousel.dart';
+import 'package:kontent/entities/content.dart';
 import 'package:kontent/kontentWidgets/kontent_carousel.dart';
 
 class KontentHomePageBodyWidget extends StatelessWidget {
@@ -8,17 +10,35 @@ class KontentHomePageBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             KontentCarouselWrapper(
-                title: 'Featured', type: KontentCarouselType.featured),
+              carousel: Carousel(
+                  id: '',
+                  title: 'Featured',
+                  type: '',
+                  orientation: KontentCarouselType.vertical,
+                  items: List<Content>.empty()),
+            ),
             KontentCarouselWrapper(
-                title: 'Movies', type: KontentCarouselType.horizontal),
+              carousel: Carousel(
+                  id: '',
+                  title: 'Movies',
+                  type: '',
+                  orientation: KontentCarouselType.vertical,
+                  items: List<Content>.empty()),
+            ),
             KontentCarouselWrapper(
-                title: 'Tv Series', type: KontentCarouselType.vertical)
+              carousel: Carousel(
+                  id: '',
+                  title: 'Tv Series',
+                  type: '',
+                  orientation: KontentCarouselType.vertical,
+                  items: List<Content>.empty()),
+            )
           ],
         ),
       ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kontent/entities/item.dart';
+import 'package:kontent/entities/content.dart';
 
 class KontentDownloadEntry extends StatelessWidget {
-  final Item item;
+  final Content item;
 
   const KontentDownloadEntry({super.key, required this.item});
 
@@ -31,7 +31,7 @@ class KontentDownloadEntry extends StatelessWidget {
                 verticalDirection: VerticalDirection.down,
                 children: <Widget>[
                   Text(
-                    item.titolo,
+                    item.title,
                     style: const TextStyle(
                       fontSize: 25,
                     ),
@@ -39,7 +39,7 @@ class KontentDownloadEntry extends StatelessWidget {
                   Flexible(
                     fit: FlexFit.tight,
                     child: Text(
-                      item.descrizione,
+                      item.description,
                       overflow: TextOverflow.fade,
                       style: const TextStyle(
                         fontSize: 15,

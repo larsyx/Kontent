@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kontent/entities/item.dart';
+import 'package:kontent/entities/content.dart';
 import 'package:kontent/kontentWidgets/kontent_download_entry.dart';
 
 class KontentDownloadPageBodyWidget extends StatelessWidget {
-  final List<Item> itemList;
+  final List<Content> itemList;
 
   const KontentDownloadPageBodyWidget({super.key, required this.itemList});
 
@@ -16,10 +16,13 @@ class KontentDownloadPageBodyWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: itemList
               .map((e) => KontentDownloadEntry(
-                    item: Item(
+                    item: Content(
                       id: e.id,
-                      titolo: e.titolo,
-                      descrizione: e.descrizione,
+                      title: e.title,
+                      description: e.description,
+                      thumbnail: '',
+                      genre: '',
+                      duration: 0,
                     ),
                   ))
               .toList(),

@@ -5,14 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="687ae313-f444-41fa-9364-fe3e6a3b37b4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Code/kontent/lib/entities/item.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/kontent/lib/examples/examples.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/lib/examples/examples.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/kontent/lib/kontentPages/home/kontent_account_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/lib/kontentPages/home/kontent_account_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/kontent/lib/kontentPages/home/kontent_downloads_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/lib/kontentPages/home/kontent_downloads_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/kontent/lib/kontentPages/home/kontent_home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/lib/kontentPages/home/kontent_home_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/kontent/lib/kontentPages/intro/kontent_login_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/lib/kontentPages/intro/kontent_login_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/kontent/lib/kontentPages/mediaplayer/kontent_video_player.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/lib/kontentPages/mediaplayer/kontent_video_player.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/kontent/lib/kontentWidgets/kontent_carousel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/lib/kontentWidgets/kontent_carousel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/kontent/lib/kontentWidgets/kontent_download_entry.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/lib/kontentWidgets/kontent_download_entry.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/kontent/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/kontent/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/kontent/linux/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/linux/flutter/generated_plugin_registrant.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/kontent/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/linux/flutter/generated_plugins.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/kontent/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/kontent/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/kontent/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/pubspec.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/kontent/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/kontent/windows/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/windows/flutter/generated_plugin_registrant.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/kontent/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/Code/kontent/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
