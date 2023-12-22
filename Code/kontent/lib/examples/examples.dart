@@ -50,7 +50,14 @@ class Examples {
     'Horror',
     'Azione',
     'Fantasy',
-    'Cartoni Animati'
+    'Cartoni Animati',
+    'Documentari',
+    'Drammatico',
+    'Avventura',
+    'Fantascienza',
+    'Romantico',
+    'Western',
+    'Storico',
   ];
 
   static final List<String> exampleSuggestionsList = [];

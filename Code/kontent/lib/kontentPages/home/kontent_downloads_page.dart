@@ -9,11 +9,11 @@ class KontentDownloadPageBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Scaffold(
+      body: OrientationBuilder(builder: (constext, orientation) {
+        return GridView.count(
+          childAspectRatio: 3 / 1,
+          crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
           children: itemList
               .map((e) => KontentDownloadEntry(
                     item: Content(
@@ -26,8 +26,33 @@ class KontentDownloadPageBodyWidget extends StatelessWidget {
                     ),
                   ))
               .toList(),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
+
+
+// @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(vertical: 5.0),
+//       child: SingleChildScrollView(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceAround,
+//           children: itemList
+//               .map((e) => KontentDownloadEntry(
+//                     item: Content(
+//                       id: e.id,
+//                       title: e.title,
+//                       description: e.description,
+//                       thumbnail: '',
+//                       genre: '',
+//                       duration: 0,
+//                     ),
+//                   ))
+//               .toList(),
+//         ),
+//       ),
+//     );
+//   }

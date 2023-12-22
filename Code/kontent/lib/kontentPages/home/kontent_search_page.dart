@@ -27,9 +27,7 @@ class KontentSearchPageBodyWidget extends StatelessWidget {
               ),
             ),
           ),
-          ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
+          Column(
             children: Examples.exampleGenresList
                 .map((e) => ListTitleEntry(data: e))
                 .toList(),
