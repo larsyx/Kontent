@@ -22,8 +22,12 @@ Future<void> main() async {
   MediaKit.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
-  ]);
-  runApp(const Kontent());
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ]).then((_) {
+    runApp(const Kontent());
+  });
 }
 
 class Kontent extends StatelessWidget {
@@ -43,7 +47,7 @@ class Kontent extends StatelessWidget {
       home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: ((ctx, snapshot) {
-            if(snapshot.connectionState == ConnectionState.waiting){
+            if (snapshot.connectionState == ConnectionState.waiting) {
               //to create a splash screen to loading
             }
             if (snapshot.hasData) {
