@@ -31,6 +31,11 @@ class KontentVideoPlayerState extends State<KontentVideoPlayer>
     routeObserver.unsubscribe(this);
     player.dispose();
     super.dispose();
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.landscapeLeft,
+    //   DeviceOrientation.landscapeRight,
+    // ]);
   }
 
   @override
@@ -93,6 +98,8 @@ class KontentVideoPlayerState extends State<KontentVideoPlayer>
   void didPop() async {
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
     ]);
   }
 }

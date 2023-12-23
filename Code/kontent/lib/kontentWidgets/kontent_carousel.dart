@@ -113,25 +113,24 @@ class KontentCarouselWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsetsDirectional.only(bottom: 5, top: 5),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.symmetric(horizontal: 25),
-              child: Text(
-                carousel.title,
-                style: const TextStyle(fontSize: 30),
-              ),
-            ),
-            carousel.orientation == KontentCarouselType.vertical
-                ? _KontentCarouselMultipleItem(
-                    carousel: carousel,
-                  )
-                : _KontentCarouselSingleItem(
-                    carousel: carousel,
-                  )
-          ]),
+      child:
+          Column(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width,
+          margin: const EdgeInsets.symmetric(horizontal: 25),
+          child: Text(
+            carousel.title,
+            style: const TextStyle(fontSize: 30),
+          ),
+        ),
+        carousel.orientation == KontentCarouselType.vertical
+            ? _KontentCarouselMultipleItem(
+                carousel: carousel,
+              )
+            : _KontentCarouselSingleItem(
+                carousel: carousel,
+              )
+      ]),
     );
   }
 }

@@ -23,7 +23,6 @@ Future<void> main() async {
   MediaKit.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]).then((_) {
@@ -54,7 +53,7 @@ class Kontent extends StatelessWidget {
             if (snapshot.hasData) {
               return const KontentMainWidget(title: 'Kontent');
             }
-            return const KontentStartPageWidget();
+            return KontentStartPage();
           })),
 
       /* isLogged

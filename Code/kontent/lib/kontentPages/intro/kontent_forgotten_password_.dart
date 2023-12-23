@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kontent/kontentWidgets/kontent_button.dart';
 
 class KontentForgottenPasswordPageWidget extends StatefulWidget {
@@ -13,6 +14,16 @@ class _KontentForgottenPasswordState
     extends State<KontentForgottenPasswordPageWidget> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+  }
 
   void submitForm() {
     // Invia i dati al server
@@ -34,7 +45,7 @@ class _KontentForgottenPasswordState
               key: _formKey,
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 child: TextFormField(
                   controller: emailController,
                   decoration: const InputDecoration(

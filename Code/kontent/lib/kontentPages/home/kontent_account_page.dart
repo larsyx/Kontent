@@ -29,8 +29,8 @@ class _KontentAccountPageBodyWidgetState
   }
 
   Future<void> _getImage() async {
-    final XFile? pickedImage =
-        await _imagePicker.pickImage(source: ImageSource.camera, preferredCameraDevice: CameraDevice.front);
+    final XFile? pickedImage = await _imagePicker.pickImage(
+        source: ImageSource.camera, preferredCameraDevice: CameraDevice.front);
 
     if (pickedImage != null) {
       setState(() {
@@ -61,6 +61,14 @@ class _KontentAccountPageBodyWidgetState
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: MediaQuery.of(context).orientation == Orientation.portrait
+          ? _buildPortraitLayout()
+          : _buildLandscapeLayout(),
+    );
+  }
+
+  Widget _buildPortraitLayout() {
     return SingleChildScrollView(
       child: Center(
         child: Column(
@@ -158,6 +166,124 @@ class _KontentAccountPageBodyWidgetState
                 FirebaseAuth.instance.signOut();
               },
               child: const Text("Logout"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLandscapeLayout() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      GestureDetector(
+                        onTap: _getImage,
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundColor:
+                              _imageFile != null && _imageFile!.path.isNotEmpty
+                                  ? Colors.transparent
+                                  : const Color(0xFF005BBE),
+                          child:
+                              _imageFile != null && _imageFile!.path.isNotEmpty
+                                  ? ClipOval(
+                                      child: Image.file(
+                                        File(_imageFile!.path),
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : const Icon(
+                                      Icons.person,
+                                      size: 50,
+                                      color: Colors.white,
+                                    ),
+                        ),
+                      ),
+                      if (_imageFile != null && _imageFile!.path.isNotEmpty)
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: _removeImage,
+                            child: const CircleAvatar(
+                              radius: 12,
+                              backgroundColor: Color(0xFF005BBE),
+                              child: Icon(
+                                Icons.close,
+                                size: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Name Surname',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "example@example.it",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      dialogChangePassword(context);
+                    },
+                    child: const Text('Change Password'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Implement logout features
+                      FirebaseAuth.instance.signOut();
+                    },
+                    child: const Text("Logout"),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  KontentCarouselWrapper(
+                    carousel: Carousel(
+                        id: '',
+                        title: 'Recently viewed',
+                        type: '',
+                        orientation: KontentCarouselType.vertical,
+                        items: List<Content>.empty()),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
