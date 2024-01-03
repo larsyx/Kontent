@@ -6,7 +6,11 @@ import 'package:media_kit_video/media_kit_video.dart';
 import 'package:media_kit_video/media_kit_video_controls/src/controls/methods/video_state.dart';
 
 class KontentVideoPlayer extends StatefulWidget {
-  const KontentVideoPlayer({Key? key}) : super(key: key);
+  final String? videoUrl;
+
+  const KontentVideoPlayer({Key? key, required this.videoUrl})
+      : super(key: key);
+
   @override
   State<KontentVideoPlayer> createState() => KontentVideoPlayerState();
 }
@@ -22,8 +26,7 @@ class KontentVideoPlayerState extends State<KontentVideoPlayer>
   void initState() {
     super.initState();
     // Play a [Media] or [Playlist].
-    player.open(Media(
-        'https://user-images.githubusercontent.com/28951144/229373695-22f88f13-d18f-4288-9bf1-c3e078d83722.mp4'));
+    player.open(Media(widget.videoUrl!));
   }
 
   @override

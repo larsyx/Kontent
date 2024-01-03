@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:kontent/entities/content.dart';
 import 'package:kontent/kontentPages/mediaplayer/kontent_video_player.dart';
-import 'package:kontent/kontentWidgets/kontent_download_entry.dart';
 
-class KontentSeriesDetailPageBodyWidget extends StatelessWidget {
-  final List<int> episodes;
-  final bool isSerie;
+class KontentContentDetailPageBodyWidget extends StatelessWidget {
+  final Content content;
 
-  const KontentSeriesDetailPageBodyWidget({
+  const KontentContentDetailPageBodyWidget({
     super.key,
-    required this.episodes,
-    required this.isSerie,
+    required this.content,
   });
 
-  Padding seriesDetailScreenTextElement(String content, double textSize) {
+  Padding contentDetailScreenTextElement(String content, double textSize) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Text(content,
@@ -22,7 +19,7 @@ class KontentSeriesDetailPageBodyWidget extends StatelessWidget {
     );
   }
 
-  Padding seriesEpisode(int contentId, BuildContext context) {
+  Padding seriesEpisode(Content content, BuildContext context) {
     return Padding(
         padding: const EdgeInsets.only(bottom: 10.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -31,12 +28,11 @@ class KontentSeriesDetailPageBodyWidget extends StatelessWidget {
               onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => KontentSeriesDetailPageBodyWidget(
-                            episodes: const [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                            isSerie: isSerie)),
+                        builder: (context) =>
+                            KontentVideoPlayer(videoUrl: content.dash)),
                   )),
           const SizedBox(height: 3),
-          Text("Episode $contentId content.title"),
+          Text(content.title),
         ]));
   }
 
@@ -64,30 +60,38 @@ class KontentSeriesDetailPageBodyWidget extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: InkWell(
-              child: const Placeholder(
-                fallbackHeight: 200,
-              ),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const KontentVideoPlayer()),
-              ),
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                return InkWell(
+                  child: SizedBox(
+                    width: constraints.maxWidth,
+                    height: constraints.maxWidth * 9 / 16,
+                    child: FadeInImage(
+                      placeholder:
+                          const AssetImage('assets/images/placeholder.png'),
+                      image: NetworkImage(content.thumbnail),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            KontentVideoPlayer(videoUrl: content.dash)),
+                  ),
+                );
+              },
             ),
           ),
-          seriesDetailScreenTextElement("content.title", 30),
-          seriesDetailScreenTextElement(
-              "content.description 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'",
-              15),
-          seriesDetailScreenTextElement("Genre: content.genre", 15),
-          seriesDetailScreenTextElement("Director: content.director", 15),
-          seriesDetailScreenTextElement(
-              "Age classification: content.ageClassification", 15),
-          seriesDetailScreenTextElement("Genre: content.genreContent", 15),
-          seriesDetailScreenTextElement("Language: content.language", 15),
-          seriesDetailScreenTextElement("Rating: content.rating", 15),
-          seriesDetailScreenTextElement("Review: content.review", 15),
-          seriesDetailScreenTextElement("Rate: content.rate", 15),
+          contentDetailScreenTextElement(content.title, 30),
+          contentDetailScreenTextElement(content.description, 15),
+          contentDetailScreenTextElement("Genre: ${content.genre}", 15),
+          contentDetailScreenTextElement("Duration: ${content.duration}", 15),
+          contentDetailScreenTextElement("Director: content.director", 15),
+          contentDetailScreenTextElement("Language: content.language", 15),
+          contentDetailScreenTextElement("Rating: content.rating", 15),
+          contentDetailScreenTextElement("Review: content.review", 15),
+          contentDetailScreenTextElement("Rate: content.rate", 15),
           const Text("My rate: ", style: TextStyle(fontSize: 15)),
           RatingBar.builder(
             minRating: 1,
@@ -107,9 +111,9 @@ class KontentSeriesDetailPageBodyWidget extends StatelessWidget {
             ),
             maxLength: 500,
           ),
-          if (isSerie) seriesDetailScreenTextElement("List of episodes:", 25),
-          if (isSerie)
-            for (int i = 1; i <= 5; i++) seriesEpisode(i, context),
+          // if (isSerie) contentDetailScreenTextElement("List of episodes:", 25),
+          // if (isSerie)
+          //   for (int i = 1; i <= 5; i++) seriesEpisode(i, context),
         ],
       ),
     );
@@ -131,25 +135,21 @@ class KontentSeriesDetailPageBodyWidget extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        seriesDetailScreenTextElement(
-                            "content.description 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'",
-                            15),
-                        seriesDetailScreenTextElement(
-                            "Genre: content.genre", 15),
-                        seriesDetailScreenTextElement(
+                        contentDetailScreenTextElement(content.description, 15),
+                        contentDetailScreenTextElement(
+                            "Genre: ${content.genre}", 15),
+                        contentDetailScreenTextElement(
+                            "Duration: ${content.duration}", 15),
+                        contentDetailScreenTextElement(
                             "Director: content.director", 15),
-                        seriesDetailScreenTextElement(
-                            "Age classification: content.ageClassification",
-                            15),
-                        seriesDetailScreenTextElement(
-                            "Genre: content.genreContent", 15),
-                        seriesDetailScreenTextElement(
+                        contentDetailScreenTextElement(
                             "Language: content.language", 15),
-                        seriesDetailScreenTextElement(
+                        contentDetailScreenTextElement(
                             "Rating: content.rating", 15),
-                        seriesDetailScreenTextElement(
+                        contentDetailScreenTextElement(
                             "Review: content.review", 15),
-                        seriesDetailScreenTextElement("Rate: content.rate", 15),
+                        contentDetailScreenTextElement(
+                            "Rate: content.rate", 15),
                         const Text("My rate: ", style: TextStyle(fontSize: 15)),
                         RatingBar.builder(
                           minRating: 1,
@@ -183,23 +183,36 @@ class KontentSeriesDetailPageBodyWidget extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: InkWell(
-                        child: const Placeholder(
-                          fallbackHeight: 200,
-                        ),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const KontentVideoPlayer()),
-                        ),
+                      child: LayoutBuilder(
+                        builder:
+                            (BuildContext context, BoxConstraints constraints) {
+                          return InkWell(
+                            child: SizedBox(
+                              width: constraints.maxWidth,
+                              height: constraints.maxWidth * 9 / 16,
+                              child: FadeInImage(
+                                placeholder: const AssetImage(
+                                    'assets/images/placeholder.png'),
+                                image: NetworkImage(content.thumbnail),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => KontentVideoPlayer(
+                                      videoUrl: content.dash)),
+                            ),
+                          );
+                        },
                       ),
                     ),
-                    seriesDetailScreenTextElement("content.title", 30),
+                    contentDetailScreenTextElement(content.title, 30),
                     const SizedBox(height: 50),
-                    if (isSerie)
-                      seriesDetailScreenTextElement("List of episodes:", 25),
-                    if (isSerie)
-                      for (int i = 1; i <= 5; i++) seriesEpisode(i, context),
+                    // if (isSerie)
+                    //   contentDetailScreenTextElement("List of episodes:", 25),
+                    // if (isSerie)
+                    //   for (int i = 1; i <= 5; i++) seriesEpisode(i, context),
                   ],
                 ),
               ),
@@ -231,19 +244,19 @@ class KontentSeriesDetailPageBodyWidget extends StatelessWidget {
 //               fallbackHeight: 200,
 //             ),
 //           ), // thumbnail photo can be used to launch the video for movies
-//           seriesDetailScreenTextElement("content.title", 30),
-//           seriesDetailScreenTextElement(
+//           contentDetailScreenTextElement("content.title", 30),
+//           contentDetailScreenTextElement(
 //               "content.description 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'",
 //               15),
-//           seriesDetailScreenTextElement("Genre: content.genre", 15),
-//           seriesDetailScreenTextElement("Director: content.director", 15),
-//           seriesDetailScreenTextElement(
+//           contentDetailScreenTextElement("Genre: content.genre", 15),
+//           contentDetailScreenTextElement("Director: content.director", 15),
+//           contentDetailScreenTextElement(
 //               "Age classification: content.ageClassification", 15),
-//           seriesDetailScreenTextElement("Genre: content.genreContent", 15),
-//           seriesDetailScreenTextElement("Language: content.language", 15),
-//           seriesDetailScreenTextElement("Rating: content.rating", 15),
-//           seriesDetailScreenTextElement("Review: content.review", 15),
-//           seriesDetailScreenTextElement("Rate: content.rate", 15),
+//           contentDetailScreenTextElement("Genre: content.genreContent", 15),
+//           contentDetailScreenTextElement("Language: content.language", 15),
+//           contentDetailScreenTextElement("Rating: content.rating", 15),
+//           contentDetailScreenTextElement("Review: content.review", 15),
+//           contentDetailScreenTextElement("Rate: content.rate", 15),
 //           const Text("My rate: ", style: TextStyle(fontSize: 15)),
 //           RatingBar.builder(
 //             minRating: 1,
@@ -263,7 +276,7 @@ class KontentSeriesDetailPageBodyWidget extends StatelessWidget {
 //             ),
 //             maxLength: 500,
 //           ),
-//           seriesDetailScreenTextElement("List of episodes: ", 25),
+//           contentDetailScreenTextElement("List of episodes: ", 25),
 //           seriesEpisodes(1),
 //           seriesEpisodes(2),
 //           seriesEpisodes(3),

@@ -232,7 +232,7 @@ class _KontentAccountPageBodyWidgetState
                   ),
                   const SizedBox(height: 20),
                   const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'Name Surname',
@@ -254,18 +254,24 @@ class _KontentAccountPageBodyWidgetState
                     ],
                   ),
                   const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      dialogChangePassword(context);
-                    },
-                    child: const Text('Change Password'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Implement logout features
-                      FirebaseAuth.instance.signOut();
-                    },
-                    child: const Text("Logout"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          dialogChangePassword(context);
+                        },
+                        child: const Text('Change Password'),
+                      ),
+                      const SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Implement logout features
+                          FirebaseAuth.instance.signOut();
+                        },
+                        child: const Text("Logout"),
+                      ),
+                    ],
                   ),
                 ],
               ),
