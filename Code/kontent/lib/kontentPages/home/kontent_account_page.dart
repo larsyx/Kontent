@@ -1,58 +1,42 @@
-import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kontent/kontentWidgets/kontent_carousel.dart';
 import 'package:kontent/kontentWidgets/kontent_change_password_dialog.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:kontent/kontentWidgets/kontent_user_image.dart';
 
 class KontentAccountPageBodyWidget extends StatefulWidget {
   const KontentAccountPageBodyWidget({super.key});
 
   @override
-  _KontentAccountPageBodyWidgetState createState() =>
+  State<KontentAccountPageBodyWidget> createState() =>
       _KontentAccountPageBodyWidgetState();
 }
 
 class _KontentAccountPageBodyWidgetState
     extends State<KontentAccountPageBodyWidget> {
-  ImagePicker _imagePicker = ImagePicker();
-  XFile? _imageFile;
-  String userEmail = '';
+  String _userUsername = '';
+  String _userEmail = '';
 
   @override
   void initState() {
     super.initState();
-    getEmail();
-    _imagePicker = ImagePicker();
+    _getData();
   }
 
-  Future<void> _getImage() async {
-    final XFile? pickedImage =
-        await _imagePicker.pickImage(source: ImageSource.camera, preferredCameraDevice: CameraDevice.front);
+  Future<void> _getData() async {
+    final currentUser = FirebaseAuth.instance.currentUser!;
+    final userId = currentUser.uid;
+    final firestore = FirebaseFirestore.instance;
 
-    if (pickedImage != null) {
+    final userData = await firestore.collection('users').doc(userId).get();
+    final username = userData.data()?['username'];
+    final email = userData.data()?['email'];
+
+    if (username != null) {
       setState(() {
-        _imageFile = pickedImage;
-      });
-    }
-  }
-
-  void _removeImage() {
-    setState(() {
-      _imageFile = null;
-    });
-  }
-
-  Future<void> getEmail() async {
-    User? user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      setState(() {
-        userEmail = user.email ?? 'Nessuna email disponibile';
-      });
-    } else {
-      setState(() {
-        userEmail = 'L\'utente non è autenticato';
+        _userUsername = username;
+        _userEmail = email;
       });
     }
   }
@@ -64,69 +48,25 @@ class _KontentAccountPageBodyWidgetState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const SizedBox(height: 25),
-            Stack(
-              children: [
-                GestureDetector(
-                  onTap: _getImage,
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundColor:
-                        _imageFile != null && _imageFile!.path.isNotEmpty
-                            ? Colors.transparent
-                            : const Color(0xFF005BBE),
-                    child: _imageFile != null && _imageFile!.path.isNotEmpty
-                        ? ClipOval(
-                            child: Image.file(
-                              File(_imageFile!.path),
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : const Icon(
-                            Icons.person,
-                            size: 50,
-                            color: Colors.white,
-                          ),
-                  ),
-                ),
-                if (_imageFile != null && _imageFile!.path.isNotEmpty)
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: _removeImage,
-                      child: const CircleAvatar(
-                        radius: 12,
-                        backgroundColor: Color(0xFF005BBE),
-                        child: Icon(
-                          Icons.close,
-                          size: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            const SizedBox(height: 15),
+            const UserImagePicker(),
+            const SizedBox(height: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Name Surname',
-                  style: TextStyle(
+                  _userUsername,
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
-                  height: 10,
+                const SizedBox(
+                  height: 5,
                 ),
                 Text(
-                  "example@example.it",
-                  style: TextStyle(
+                  _userEmail,
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Colors.grey,
                   ),
@@ -145,14 +85,14 @@ class _KontentAccountPageBodyWidgetState
               title: "Recently viewed",
               type: KontentCarouselType.horizontal,
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 25),
             ElevatedButton(
               onPressed: () {
-                // Implement logout features
                 FirebaseAuth.instance.signOut();
               },
               child: const Text("Logout"),
             ),
+            const SizedBox(height: 25),
           ],
         ),
       ),
