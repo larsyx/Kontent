@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:kontent/main.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
-import 'package:media_kit_video/media_kit_video_controls/src/controls/methods/video_state.dart';
 
 class KontentVideoPlayer extends StatefulWidget {
   final String? videoUrl;
@@ -17,9 +16,7 @@ class KontentVideoPlayer extends StatefulWidget {
 
 class KontentVideoPlayerState extends State<KontentVideoPlayer>
     with RouteAware {
-  // Create a [Player] to control playback.
   late final player = Player();
-  // Create a [VideoController] to handle video output from [Player].
   late final controller = VideoController(player);
 
   @override
@@ -49,31 +46,16 @@ class KontentVideoPlayerState extends State<KontentVideoPlayer>
           height: MediaQuery.of(context).size.width * 9.0 / 16.0,
           child: MaterialVideoControlsTheme(
             normal: MaterialVideoControlsThemeData(
-              // controlsHoverDuration: const Duration(seconds: 100),
-              // buttonBarButtonSize: 24.0,
-              // buttonBarButtonColor: Colors.white,
               topButtonBar: [
                 MaterialCustomButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: const Icon(Icons.arrow_back_ios),
+                  icon: const Icon(Icons.arrow_back_ios_new),
                 ),
               ],
             ),
-            fullscreen: MaterialVideoControlsThemeData(
-              displaySeekBar: false,
-              topButtonBar: [
-                MaterialCustomButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.arrow_back_ios),
-                ),
-              ],
-              automaticallyImplySkipNextButton: false,
-              automaticallyImplySkipPreviousButton: false,
-            ),
+            fullscreen: kDefaultMaterialVideoControlsThemeDataFullscreen,
             child: Scaffold(
               body: Video(
                 controller: controller,
