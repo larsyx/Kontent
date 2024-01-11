@@ -1,3 +1,5 @@
+import 'package:quiver/core.dart';
+
 class Content {
   String id;
   String title;
@@ -54,4 +56,11 @@ class Content {
       progressive: metaInfo?['progressive'] as String?,
     );
   }
+
+  @override
+  bool operator ==(other) =>
+      other is Content && title == other.title && id == other.id;
+
+  @override
+  int get hashCode => hash2(id.hashCode, title.hashCode);
 }

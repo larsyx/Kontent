@@ -7,11 +7,12 @@ import 'package:kontent/examples/examples.dart';
 import 'package:kontent/firebase_options.dart';
 import 'package:kontent/kontentPages/home/kontent_account_page.dart';
 import 'package:kontent/kontentPages/home/kontent_downloads_page.dart';
-import 'package:kontent/kontentPages/home/kontent_home_page.dart';
+// import 'package:kontent/kontentPages/home/kontent_home_page.dart';
 import 'package:kontent/kontentPages/home/kontent_search_page.dart';
 import 'package:kontent/kontentPages/intro/kontent_start_page.dart';
 import 'package:kontent/kontentPages/home/kontent_selected_page.dart';
-import 'package:media_kit/media_kit.dart'; // Provides [Player], [Media], [Playlist] etc.
+import 'package:kontent/kontentWidgets/kontent_scaffold.dart';
+import 'package:media_kit/media_kit.dart';
 
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 Future<void> main() async {
@@ -75,10 +76,11 @@ class KontentMainWidget extends StatefulWidget {
 
 class _KontentMainWidgetState extends State<KontentMainWidget> {
   int _selectedIndex = 0;
+
   static final List<Widget> _pages = <Widget>[
     //const KontentHomePageBodyWidget(),
     const KontentSelectedPageBodyWidget(idPage: 'testpage'),
-    const KontentSearchPageBodyWidget(),
+    const KontentSearchPageBodyWidget(idPage: 'testpage'),
     KontentDownloadPageBodyWidget(itemList: Examples.exampleDownloadList),
     const KontentAccountPageBodyWidget(),
   ];

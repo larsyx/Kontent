@@ -18,7 +18,13 @@ class KontentDownloadEntry extends StatelessWidget {
             width: 100,
             height: 170,
             margin: const EdgeInsets.only(left: 20, right: 20),
-            decoration: const BoxDecoration(color: Colors.black),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(item.thumbnail),
+                fit: BoxFit.fill,
+              ),
+              color: Colors.black,
+            ),
           ),
           SizedBox(
             height: 170,
