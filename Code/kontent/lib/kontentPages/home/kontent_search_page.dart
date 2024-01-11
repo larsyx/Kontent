@@ -5,7 +5,6 @@ import 'package:kontent/entities/content.dart';
 import 'package:kontent/entities/page.dart' as kontent_page;
 import 'package:kontent/examples/examples.dart';
 import 'package:kontent/kontentPages/home/kontent_downloads_page.dart';
-import 'package:kontent/kontentWidgets/kontent_carousel.dart';
 import 'package:standard_searchbar/old/standard_searchbar.dart';
 
 List<Content> contents = [];

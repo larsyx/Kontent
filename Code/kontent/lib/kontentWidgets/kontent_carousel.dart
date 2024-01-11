@@ -3,7 +3,6 @@ import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:kontent/entities/carousel.dart';
 import 'package:kontent/entities/content.dart';
 import 'package:kontent/kontentPages/mediaplayer/kontent_content_detail_page.dart';
-import 'package:kontent/kontentPages/mediaplayer/kontent_video_player.dart';
 
 enum KontentCarouselType { featured, horizontal, vertical }
 
