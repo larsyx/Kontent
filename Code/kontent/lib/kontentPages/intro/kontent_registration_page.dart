@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:kontent/kontentWidgets/kontent_button.dart';
@@ -22,6 +23,7 @@ class _KontentRegistrationPageState
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+  var _enteredUsername = '';
   var _enteredEmail = '';
   var _enteredPassword = '';
 
@@ -34,12 +36,21 @@ class _KontentRegistrationPageState
       return;
     }
 
+    FocusScope.of(context).unfocus();
     _formKey.currentState!.save();
     try {
-      await _firebase.createUserWithEmailAndPassword(
+      final userCredential = await _firebase.createUserWithEmailAndPassword(
         email: _enteredEmail,
         password: _enteredPassword,
       );
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set({
+        'username': _enteredUsername,
+        'email': _enteredEmail,
+      });
+
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
@@ -88,6 +99,9 @@ class _KontentRegistrationPageState
                             border: OutlineInputBorder(),
                           ),
                           validator: validateUsername,
+                          onSaved: (value) {
+                            _enteredUsername = value!;
+                          },
                         ),
                       ),
                       Padding(

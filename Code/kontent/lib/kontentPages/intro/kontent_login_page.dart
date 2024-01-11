@@ -30,6 +30,8 @@ class _KontentLoginPageState extends State<KontentLoginPageWidget> {
       return;
     }
 
+    FocusScope.of(context).unfocus();
+
     _formKey.currentState!.save();
 
     try {
