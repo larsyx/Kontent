@@ -31,6 +31,7 @@ class KontentDownloadPageBodyWidget extends StatelessWidget {
                           thumbnail: item.thumbnail,
                           genre: '',
                           duration: 0,
+                          director: '',
                         ),
                       ))
                   .toList()

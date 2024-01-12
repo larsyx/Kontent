@@ -9,6 +9,7 @@ class Examples {
       thumbnail: '',
       genre: '',
       duration: 0,
+      director: '',
     ),
     Content(
       id: '0',
@@ -17,6 +18,7 @@ class Examples {
       thumbnail: '',
       genre: '',
       duration: 0,
+      director: '',
     ),
     Content(
       id: '0',
@@ -25,6 +27,7 @@ class Examples {
       thumbnail: '',
       genre: '',
       duration: 0,
+      director: '',
     ),
     Content(
       id: '0',
@@ -33,6 +36,7 @@ class Examples {
       thumbnail: '',
       genre: '',
       duration: 0,
+      director: '',
     ),
     Content(
       id: '0',
@@ -41,6 +45,7 @@ class Examples {
       thumbnail: '',
       genre: '',
       duration: 0,
+      director: '',
     ),
   ];
 

@@ -68,7 +68,7 @@ class KontentContentDetailPageBodyWidget extends StatelessWidget {
                     height: constraints.maxWidth * 9 / 16,
                     child: FadeInImage(
                       placeholder:
-                          const AssetImage('assets/images/placeholder.png'),
+                          const AssetImage('assets/images/placeholder.jpg'),
                       image: NetworkImage(content.thumbnail),
                       fit: BoxFit.cover,
                     ),
@@ -85,10 +85,9 @@ class KontentContentDetailPageBodyWidget extends StatelessWidget {
           ),
           contentDetailScreenTextElement(content.title, 30),
           contentDetailScreenTextElement(content.description, 15),
-          contentDetailScreenTextElement("Genre: ${content.genre}", 15),
-          contentDetailScreenTextElement("Duration: ${content.duration}", 15),
-          contentDetailScreenTextElement("Director: content.director", 15),
-          contentDetailScreenTextElement("Language: content.language", 15),
+          contentDetailScreenTextElement("Genere: ${content.genre}", 15),
+          contentDetailScreenTextElement("Durata: ${content.duration} min", 15),
+          contentDetailScreenTextElement("Regia: ${content.director}", 15),
           contentDetailScreenTextElement("Rating: content.rating", 15),
           contentDetailScreenTextElement("Review: content.review", 15),
           contentDetailScreenTextElement("Rate: content.rate", 15),

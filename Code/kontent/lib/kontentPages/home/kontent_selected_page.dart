@@ -19,14 +19,11 @@ class KontentSelectedPageBodyWidget extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             //errore
-            print(
-                'Si è verificato un errore durante la richiesta: ${snapshot.error}');
             return const Center(
               child: Text('Errore durante la richiesta della pagina',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
             );
           } else if (!snapshot.hasData || snapshot.data == null) {
-            print('Pagina inesistente');
             return const Center(
                 child: Text('Pagina inesistente',
                     style:

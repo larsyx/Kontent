@@ -5,9 +5,8 @@ class Content {
   String title;
   String description;
   String thumbnail;
-  String? hls;
   String? dash;
-  String? progressive;
+  String director;
   String genre;
   int duration;
 
@@ -19,15 +18,13 @@ class Content {
 
   get getThumbnail => thumbnail;
 
-  get getHls => hls;
-
   get getDash => dash;
-
-  get getProgressive => progressive;
 
   get getGenre => genre;
 
   get getDuration => duration;
+
+  get getDirector => director;
 
   Content({
     required this.id,
@@ -36,9 +33,8 @@ class Content {
     required this.thumbnail,
     required this.genre,
     required this.duration,
-    this.hls,
+    required this.director,
     this.dash,
-    this.progressive,
   });
 
   factory Content.fromJson(Map<String, dynamic> json) {
@@ -51,9 +47,8 @@ class Content {
       thumbnail: json['thumbnail'] as String,
       genre: metaInfo?['genre'] as String,
       duration: metaInfo?['duration'] as int,
-      hls: metaInfo?['hls'] as String?,
+      director: metaInfo?['director'] as String,
       dash: metaInfo?['dash'] as String?,
-      progressive: metaInfo?['progressive'] as String?,
     );
   }
 

@@ -8,7 +8,7 @@ enum KontentCarouselType { featured, horizontal, vertical }
 
 final carouselTypeToCarouselHeight = <KontentCarouselType, double>{
   KontentCarouselType.featured: 300,
-  KontentCarouselType.horizontal: 100,
+  KontentCarouselType.horizontal: 200,
   KontentCarouselType.vertical: 400
 };
 
@@ -21,7 +21,7 @@ class _KontentCarouselSingleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlutterCarousel(
       options: CarouselOptions(
-        height: carouselTypeToCarouselHeight[carousel.getOrientation],
+        height: carouselTypeToCarouselHeight[KontentCarouselType.featured],
         showIndicator: true,
         slideIndicator: const CircularSlideIndicator(),
       ),
@@ -61,6 +61,7 @@ class _KontentCarouselMultipleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlutterCarousel.builder(
       options: CarouselOptions(
+        height: carouselTypeToCarouselHeight[carousel.getOrientation],
         enlargeCenterPage: false,
         viewportFraction: 0.9,
         showIndicator: true,
@@ -83,8 +84,7 @@ class _KontentCarouselMultipleItem extends StatelessWidget {
                 ),
                 child: Container(
                   color: Colors.black,
-                  height: carouselTypeToCarouselHeight[
-                      KontentCarouselType.vertical],
+                  height: carouselTypeToCarouselHeight[carousel.getOrientation],
                   child: Image.network(
                     item.thumbnail,
                     fit: BoxFit.cover,
@@ -121,7 +121,7 @@ class KontentCarouselWrapper extends StatelessWidget {
             style: const TextStyle(fontSize: 30),
           ),
         ),
-        carousel.orientation == KontentCarouselType.vertical
+        carousel.items.length > 1
             ? _KontentCarouselMultipleItem(
                 carousel: carousel,
               )
