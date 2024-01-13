@@ -95,7 +95,7 @@ class _KontentStartPageState extends State<KontentStartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Kontent"),
+        title: const Text("kontent"),
         backgroundColor: Theme.of(context).primaryColor,
         foregroundColor: Colors.white,
         titleTextStyle:
