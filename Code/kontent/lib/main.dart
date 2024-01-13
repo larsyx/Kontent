@@ -50,7 +50,7 @@ class Kontent extends StatelessWidget {
               //to create a splash screen to loading
             }
             if (snapshot.hasData) {
-              return const KontentMainWidget(title: 'Kontent');
+              return const KontentMainWidget(title: 'kontent');
             }
             return KontentStartPage();
           })),
@@ -79,7 +79,7 @@ class _KontentMainWidgetState extends State<KontentMainWidget> {
     //const KontentHomePageBodyWidget(),
     const KontentSelectedPageBodyWidget(idPage: 'testpage'),
     const KontentSearchPageBodyWidget(idPage: 'testpage'),
-    KontentDownloadPageBodyWidget(itemList: Examples.exampleDownloadList),
+    // KontentDownloadPageBodyWidget(itemList: Examples.exampleDownloadList),
     const KontentAccountPageBodyWidget(),
   ];
 
@@ -103,8 +103,6 @@ class _KontentMainWidgetState extends State<KontentMainWidget> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.download), label: 'Download'),
           BottomNavigationBarItem(
               icon: Icon(Icons.account_circle), label: 'Account')
         ],
