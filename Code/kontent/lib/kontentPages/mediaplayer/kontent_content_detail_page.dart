@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:kontent/entities/content.dart';
 import 'package:kontent/kontentPages/mediaplayer/kontent_video_player.dart';
+import 'package:html/parser.dart';
+import 'dart:convert';
 
 class KontentContentDetailPageBodyWidget extends StatelessWidget {
   final Content content;
@@ -14,7 +16,7 @@ class KontentContentDetailPageBodyWidget extends StatelessWidget {
   Padding contentDetailScreenTextElement(String content, double textSize) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Text(content,
+      child: Text(parse(utf8.decode(content.codeUnits)).documentElement!.text,
           style: TextStyle(fontSize: textSize, fontWeight: FontWeight.w400)),
     );
   }
