@@ -16,8 +16,10 @@ class KontentContentDetailPageBodyWidget extends StatelessWidget {
   Padding contentDetailScreenTextElement(String content, double textSize) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Text(parse(utf8.decode(content.codeUnits)).documentElement!.text,
-          style: TextStyle(fontSize: textSize, fontWeight: FontWeight.w400)),
+      child: Text(
+        content,
+        style: TextStyle(fontSize: textSize, fontWeight: FontWeight.w400),
+      ),
     );
   }
 
@@ -55,67 +57,73 @@ class KontentContentDetailPageBodyWidget extends StatelessWidget {
   }
 
   Widget _buildPortraitLayout(context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                return InkWell(
-                  child: SizedBox(
-                    width: constraints.maxWidth,
-                    height: constraints.maxWidth * 9 / 16,
-                    child: FadeInImage(
-                      placeholder:
-                          const AssetImage('assets/images/placeholder.jpg'),
-                      image: NetworkImage(content.thumbnail),
-                      fit: BoxFit.cover,
+    return FutureBuilder(
+      future: content.getRatingsAverageAndMyRatingFromirebase(),
+      builder: (context, snapshot) => SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  return InkWell(
+                    child: SizedBox(
+                      width: constraints.maxWidth,
+                      height: constraints.maxWidth * 9 / 16,
+                      child: FadeInImage(
+                        placeholder:
+                            const AssetImage('assets/images/placeholder.jpg'),
+                        image: NetworkImage(content.thumbnail),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            KontentVideoPlayer(videoUrl: content.dash)),
-                  ),
-                );
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              KontentVideoPlayer(videoUrl: content.dash)),
+                    ),
+                  );
+                },
+              ),
+            ),
+            contentDetailScreenTextElement(content.getTitle, 30),
+            contentDetailScreenTextElement(content.getDescription, 15),
+            contentDetailScreenTextElement("Genere: ${content.genre}", 15),
+            contentDetailScreenTextElement(
+                "Durata: ${content.duration} min", 15),
+            contentDetailScreenTextElement("Regia: ${content.director}", 15),
+            contentDetailScreenTextElement("Rating: ${snapshot.data?.$1}", 15),
+            contentDetailScreenTextElement("Review: content.review", 15),
+            const Text("My rate: ", style: TextStyle(fontSize: 15)),
+            RatingBar.builder(
+              initialRating: snapshot.data?.$2 ?? 0,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemSize: 20,
+              itemBuilder: (context, _) => const Icon(
+                Icons.star,
+                color: Colors.amber,
+              ),
+              onRatingUpdate: (rating) {
+                content.setRatingToFirebase(rating);
               },
             ),
-          ),
-          contentDetailScreenTextElement(content.title, 30),
-          contentDetailScreenTextElement(content.description, 15),
-          contentDetailScreenTextElement("Genere: ${content.genre}", 15),
-          contentDetailScreenTextElement("Durata: ${content.duration} min", 15),
-          contentDetailScreenTextElement("Regia: ${content.director}", 15),
-          contentDetailScreenTextElement("Rating: content.rating", 15),
-          contentDetailScreenTextElement("Review: content.review", 15),
-          contentDetailScreenTextElement("Rate: content.rate", 15),
-          const Text("My rate: ", style: TextStyle(fontSize: 15)),
-          RatingBar.builder(
-            minRating: 1,
-            direction: Axis.horizontal,
-            allowHalfRating: true,
-            itemCount: 5,
-            itemSize: 20,
-            itemBuilder: (context, _) => const Icon(
-              Icons.star,
-              color: Colors.amber,
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Write your review here',
+              ),
+              maxLength: 500,
             ),
-            onRatingUpdate: (rating) {},
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-              hintText: 'Write your review here',
-            ),
-            maxLength: 500,
-          ),
-          // if (isSerie) contentDetailScreenTextElement("List of episodes:", 25),
-          // if (isSerie)
-          //   for (int i = 1; i <= 5; i++) seriesEpisode(i, context),
-        ],
+            // if (isSerie) contentDetailScreenTextElement("List of episodes:", 25),
+            // if (isSerie)
+            //   for (int i = 1; i <= 5; i++) seriesEpisode(i, context),
+          ],
+        ),
       ),
     );
   }

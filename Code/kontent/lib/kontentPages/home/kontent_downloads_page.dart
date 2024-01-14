@@ -29,9 +29,9 @@ class KontentDownloadPageBodyWidget extends StatelessWidget {
                           title: item.title,
                           description: item.description,
                           thumbnail: item.thumbnail,
-                          genre: '',
-                          duration: 0,
-                          director: '',
+                          genre: item.genre,
+                          duration: item.duration,
+                          director: item.director,
                         ),
                       ))
                   .toList()

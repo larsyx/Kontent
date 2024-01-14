@@ -1,4 +1,12 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:html/parser.dart';
 import 'package:quiver/core.dart';
+
+FirebaseFirestore db = FirebaseFirestore.instance;
+FirebaseAuth auth = FirebaseAuth.instance;
 
 class Content {
   String id;
@@ -12,9 +20,10 @@ class Content {
 
   get getId => id;
 
-  get getTitle => title;
+  get getTitle => parse(utf8.decode(title.codeUnits)).documentElement!.text;
 
-  get getDescription => description;
+  get getDescription =>
+      parse(utf8.decode(description.codeUnits)).documentElement!.text;
 
   get getThumbnail => thumbnail;
 
@@ -25,6 +34,37 @@ class Content {
   get getDuration => duration;
 
   get getDirector => director;
+
+  Future<(double, double)> getRatingsAverageAndMyRatingFromirebase() async {
+    double ratingsAverage = await getRatingAverageFromFirebase();
+    double myRating = await getMyRatingFromFirebase();
+    return (ratingsAverage, myRating);
+  }
+
+  Future<double> getRatingAverageFromFirebase() async {
+    return await db.collection("items").doc(getTitle).get().then((value) {
+      final Map<String, dynamic>? resultMap = value.data()?["ratings"];
+      final double? sum =
+          resultMap?.values.reduce((value, element) => value + element);
+      return resultMap != null ? (sum! / resultMap.length) : 0;
+    });
+  }
+
+  Future<double> getMyRatingFromFirebase() async {
+    final User? user = auth.currentUser;
+    return await db.collection("items").doc(getTitle).get().then((value) {
+      final double? myRating = value.data()?['ratings']?['${user?.email}'];
+      return myRating ?? 0;
+    });
+  }
+
+  void setRatingToFirebase(double rating) {
+    final User? user = auth.currentUser;
+    db.collection("items").doc(getTitle).set({
+      "ratings": {"${user!.email}": rating}
+    }, SetOptions(merge: true)).onError(
+        (e, _) => print("Error writing document: $e"));
+  }
 
   Content({
     required this.id,

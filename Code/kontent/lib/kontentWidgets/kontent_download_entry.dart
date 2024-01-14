@@ -48,9 +48,7 @@ class KontentDownloadEntry extends StatelessWidget {
                   verticalDirection: VerticalDirection.down,
                   children: <Widget>[
                     Text(
-                      parse(utf8.decode(item.title.codeUnits))
-                          .documentElement!
-                          .text,
+                      item.getTitle,
                       style: const TextStyle(
                         fontSize: 25,
                       ),
@@ -58,9 +56,7 @@ class KontentDownloadEntry extends StatelessWidget {
                     Flexible(
                       fit: FlexFit.tight,
                       child: Text(
-                        parse(utf8.decode(item.description.codeUnits))
-                            .documentElement!
-                            .text,
+                        item.getDescription,
                         overflow: TextOverflow.fade,
                         style: const TextStyle(
                           fontSize: 15,
