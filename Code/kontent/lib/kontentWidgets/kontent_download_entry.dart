@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart';
 import 'package:kontent/entities/content.dart';
 
 class KontentDownloadEntry extends StatelessWidget {
@@ -37,7 +40,9 @@ class KontentDownloadEntry extends StatelessWidget {
                 verticalDirection: VerticalDirection.down,
                 children: <Widget>[
                   Text(
-                    item.title,
+                    parse(utf8.decode(item.title.codeUnits))
+                        .documentElement!
+                        .text,
                     style: const TextStyle(
                       fontSize: 25,
                     ),
@@ -45,7 +50,9 @@ class KontentDownloadEntry extends StatelessWidget {
                   Flexible(
                     fit: FlexFit.tight,
                     child: Text(
-                      item.description,
+                      parse(utf8.decode(item.description.codeUnits))
+                          .documentElement!
+                          .text,
                       overflow: TextOverflow.fade,
                       style: const TextStyle(
                         fontSize: 15,
