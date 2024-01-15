@@ -59,7 +59,6 @@ class Examples {
     'Documentari',
     'Drammatico',
     'Avventura',
-    'Fantascienza',
     'Romantico',
     'Western',
     'Storico',

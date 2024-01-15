@@ -35,10 +35,12 @@ class Content {
 
   get getDirector => director;
 
-  Future<(double, double)> getRatingsAverageAndMyRatingFromirebase() async {
+  Future<(double, double, String?)>
+      getRatingsAverageAndMyRatingFromirebase() async {
     double ratingsAverage = await getRatingAverageFromFirebase();
     double myRating = await getMyRatingFromFirebase();
-    return (ratingsAverage, myRating);
+    String? myReview = await getMyReviewFromFirebase();
+    return (ratingsAverage, myRating, myReview);
   }
 
   Future<double> getRatingAverageFromFirebase() async {
@@ -62,6 +64,23 @@ class Content {
     final User? user = auth.currentUser;
     db.collection("items").doc(getTitle).set({
       "ratings": {"${user!.email}": rating}
+    }, SetOptions(merge: true)).onError(
+        (e, _) => print("Error writing document: $e"));
+  }
+
+  Future<String?> getMyReviewFromFirebase() async {
+    final User? user = auth.currentUser;
+    return await db.collection("items").doc(getTitle).get().then((value) {
+      final String? myReview = value.data()?['reviews']?['${user?.email}'];
+      return myReview;
+    });
+  }
+
+  void setReviewToFirebase(String review) {
+    if (review.trim() == '') return;
+    final User? user = auth.currentUser;
+    db.collection("items").doc(getTitle).set({
+      "reviews": {"${user!.email}": review}
     }, SetOptions(merge: true)).onError(
         (e, _) => print("Error writing document: $e"));
   }

@@ -5,10 +5,13 @@ import 'package:kontent/kontentPages/mediaplayer/kontent_video_player.dart';
 import 'package:html/parser.dart';
 import 'dart:convert';
 
+import 'package:kontent/kontentWidgets/kontent_button.dart';
+
 class KontentContentDetailPageBodyWidget extends StatelessWidget {
+  var _review;
   final Content content;
 
-  const KontentContentDetailPageBodyWidget({
+  KontentContentDetailPageBodyWidget({
     super.key,
     required this.content,
   });
@@ -96,7 +99,9 @@ class KontentContentDetailPageBodyWidget extends StatelessWidget {
                 "Durata: ${content.duration} min", 15),
             contentDetailScreenTextElement("Regia: ${content.director}", 15),
             contentDetailScreenTextElement("Rating: ${snapshot.data?.$1}", 15),
-            contentDetailScreenTextElement("Review: content.review", 15),
+            // contentDetailScreenTextElement(
+            //     "Review: \n${snapshot.data?.$3 ?? 'Non hai ancora pubblicato una recensione per questo contenuto'}",
+            //     15),
             const Text("My rate: ", style: TextStyle(fontSize: 15)),
             RatingBar.builder(
               initialRating: snapshot.data?.$2 ?? 0,
@@ -113,15 +118,24 @@ class KontentContentDetailPageBodyWidget extends StatelessWidget {
                 content.setRatingToFirebase(rating);
               },
             ),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Write your review here',
-              ),
-              maxLength: 500,
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    onChanged: (review) => _review = review,
+                    decoration: InputDecoration(
+                      hintText:
+                          snapshot.data?.$3 ?? 'Scrivi qui la tua recensione',
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                ElevatedButton(
+                  onPressed: () => content.setReviewToFirebase(_review),
+                  child: const Text('Salva'),
+                ),
+              ],
             ),
-            // if (isSerie) contentDetailScreenTextElement("List of episodes:", 25),
-            // if (isSerie)
-            //   for (int i = 1; i <= 5; i++) seriesEpisode(i, context),
           ],
         ),
       ),
