@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:kontent/entities/content.dart';
 import 'package:kontent/kontentPages/mediaplayer/kontent_video_player.dart';
-import 'package:html/parser.dart';
-import 'dart:convert';
-
-import 'package:kontent/kontentWidgets/kontent_button.dart';
 
 class KontentContentDetailPageBodyWidget extends StatelessWidget {
   var _review;
