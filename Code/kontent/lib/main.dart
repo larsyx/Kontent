@@ -48,6 +48,7 @@ class Kontent extends StatelessWidget {
               //to create a splash screen to loading
             }
             if (snapshot.hasData) {
+              // Ciao come va commento per push
               return const KontentMainWidget(title: 'kontent');
             }
             return KontentStartPage();
