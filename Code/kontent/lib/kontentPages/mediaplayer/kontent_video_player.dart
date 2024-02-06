@@ -32,6 +32,7 @@ class KontentVideoPlayerState extends State<KontentVideoPlayer>
       initialVolume: 1.0,
       isMixWithOtherMedia: false,
       showPlaybackControls: false,
+      allowBackgroundPlayback: false,
     ),
   );
 
@@ -43,6 +44,8 @@ class KontentVideoPlayerState extends State<KontentVideoPlayer>
       if (event == AdEventType.completed || event == AdEventType.skipped) {
         imaController.pause();
         player.open(Media(widget.videoUrl!));
+        //frame and fps stats are part of provided video, another video to compare haven't that (replace "widget.videoUrl!" from previous line):
+        //'https://cdn.bitmovin.com/content/assets/art-of-motion-dash-hls-progressive/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd'
         setState(() {
           isAdPlayed = false;
         });
