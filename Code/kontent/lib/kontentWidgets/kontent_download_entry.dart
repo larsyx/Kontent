@@ -37,9 +37,7 @@ class KontentDownloadEntry extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            SizedBox(
-              height: 170,
-              width: 240,
+            Flexible(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Column(
@@ -49,8 +47,9 @@ class KontentDownloadEntry extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       item.getTitle,
+                      overflow: TextOverflow.fade,
                       style: const TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                       ),
                     ),
                     Flexible(
@@ -59,7 +58,7 @@ class KontentDownloadEntry extends StatelessWidget {
                         item.getDescription,
                         overflow: TextOverflow.fade,
                         style: const TextStyle(
-                          fontSize: 15,
+                          fontSize: 14,
                         ),
                       ),
                     ),

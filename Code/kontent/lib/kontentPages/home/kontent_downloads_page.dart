@@ -25,14 +25,14 @@ class KontentDownloadPageBodyWidget extends StatelessWidget {
               ? itemList
                   .map((item) => KontentDownloadEntry(
                         item: Content(
-                          id: item.id,
-                          title: item.title,
-                          description: item.description,
-                          thumbnail: item.thumbnail,
-                          genre: item.genre,
-                          duration: item.duration,
-                          director: item.director,
-                        ),
+                            id: item.id,
+                            title: item.title,
+                            description: item.description,
+                            thumbnail: item.thumbnail,
+                            genre: item.genre,
+                            duration: item.duration,
+                            director: item.director,
+                            dash: item.dash),
                       ))
                   .toList()
               : [
