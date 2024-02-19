@@ -153,7 +153,8 @@ class KontentContentDetailPageBodyWidget extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        contentDetailScreenTextElement(content.description, 15),
+                        contentDetailScreenTextElement(
+                            content.getDescription, 15),
                         contentDetailScreenTextElement(
                             "Genre: ${content.genre}", 15),
                         contentDetailScreenTextElement(
@@ -225,12 +226,8 @@ class KontentContentDetailPageBodyWidget extends StatelessWidget {
                         },
                       ),
                     ),
-                    contentDetailScreenTextElement(content.title, 30),
+                    contentDetailScreenTextElement(content.getTitle, 30),
                     const SizedBox(height: 50),
-                    // if (isSerie)
-                    //   contentDetailScreenTextElement("List of episodes:", 25),
-                    // if (isSerie)
-                    //   for (int i = 1; i <= 5; i++) seriesEpisode(i, context),
                   ],
                 ),
               ),
@@ -241,66 +238,3 @@ class KontentContentDetailPageBodyWidget extends StatelessWidget {
     );
   }
 }
-
-            // GridView.count(
-            //   childAspectRatio: 2 / 1,
-            //   crossAxisCount: 2,
-            //   children: episodes.map((e) => seriesEpisode(e, context)).toList(),
-            // )
-
-// @override
-// Widget build(BuildContext context) {
-//   return SingleChildScrollView(
-//     child: Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 10),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           const Padding(
-//             padding: EdgeInsets.symmetric(vertical: 8.0),
-//             child: Placeholder(
-//               fallbackHeight: 200,
-//             ),
-//           ), // thumbnail photo can be used to launch the video for movies
-//           contentDetailScreenTextElement("content.title", 30),
-//           contentDetailScreenTextElement(
-//               "content.description 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'",
-//               15),
-//           contentDetailScreenTextElement("Genre: content.genre", 15),
-//           contentDetailScreenTextElement("Director: content.director", 15),
-//           contentDetailScreenTextElement(
-//               "Age classification: content.ageClassification", 15),
-//           contentDetailScreenTextElement("Genre: content.genreContent", 15),
-//           contentDetailScreenTextElement("Language: content.language", 15),
-//           contentDetailScreenTextElement("Rating: content.rating", 15),
-//           contentDetailScreenTextElement("Review: content.review", 15),
-//           contentDetailScreenTextElement("Rate: content.rate", 15),
-//           const Text("My rate: ", style: TextStyle(fontSize: 15)),
-//           RatingBar.builder(
-//             minRating: 1,
-//             direction: Axis.horizontal,
-//             allowHalfRating: true,
-//             itemCount: 5,
-//             itemSize: 20,
-//             itemBuilder: (context, _) => const Icon(
-//               Icons.star,
-//               color: Colors.amber,
-//             ),
-//             onRatingUpdate: (rating) {},
-//           ),
-//           TextFormField(
-//             decoration: const InputDecoration(
-//               hintText: 'Write your review here',
-//             ),
-//             maxLength: 500,
-//           ),
-//           contentDetailScreenTextElement("List of episodes: ", 25),
-//           seriesEpisodes(1),
-//           seriesEpisodes(2),
-//           seriesEpisodes(3),
-//           seriesEpisodes(4),
-//           seriesEpisodes(5),
-//         ],
-//       ),
-//     ),
-//   );
