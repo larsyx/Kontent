@@ -29,11 +29,10 @@ class KontentContentDetailPageBodyWidget extends StatelessWidget {
           InkWell(
               child: const Placeholder(fallbackHeight: 200),
               onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            KontentVideoPlayer(videoUrl: content.dash)),
-                  )),
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          KontentVideoPlayer(videoUrl: content.dash)))),
           const SizedBox(height: 3),
           Text(content.title),
         ]));

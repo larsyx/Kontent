@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kontent/entities/content.dart';
 import 'package:kontent/firebase_options.dart';
 import 'package:kontent/kontentPages/home/kontent_account_page.dart';
 import 'package:kontent/kontentPages/home/kontent_search_page.dart';
@@ -23,7 +24,9 @@ Future<void> main() async {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]).then((_) {
-    runApp(const Kontent());
+    runApp(
+      const Kontent(),
+    );
   });
 }
 

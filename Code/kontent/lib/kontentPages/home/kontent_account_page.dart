@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kontent/entities/carousel.dart';
 import 'package:kontent/entities/content.dart';
+import 'package:kontent/kontentPages/home/kontent_search_page.dart';
 import 'package:kontent/kontentWidgets/kontent_carousel.dart';
 import 'package:kontent/kontentWidgets/kontent_change_password_dialog.dart';
 import 'package:kontent/kontentWidgets/kontent_user_image.dart';
@@ -97,7 +98,10 @@ class _KontentAccountPageBodyWidgetState
                   title: 'Recently viewed',
                   type: '',
                   orientation: KontentCarouselType.vertical,
-                  items: List<Content>.empty()),
+                  items: contents
+                      .take(6)
+                      .toSet()
+                      .toList()), // just a mockup- no firabase integration
             ),
             const SizedBox(height: 25),
             ElevatedButton(
@@ -158,7 +162,7 @@ class _KontentAccountPageBodyWidgetState
                   title: 'Recently viewed',
                   type: '',
                   orientation: KontentCarouselType.vertical,
-                  items: List<Content>.empty()),
+                  items: contents.take(6).toSet().toList()),
             ),
             const SizedBox(height: 25),
             ElevatedButton(
