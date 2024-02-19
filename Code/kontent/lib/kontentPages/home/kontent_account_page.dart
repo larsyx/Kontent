@@ -1,12 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kontent/cms/cms_request.dart';
 import 'package:kontent/entities/carousel.dart';
 import 'package:kontent/entities/content.dart';
+import 'package:kontent/entities/page.dart' as kontent_page;
 import 'package:kontent/kontentPages/home/kontent_search_page.dart';
+import 'package:kontent/kontentPages/home/kontent_selected_page.dart';
 import 'package:kontent/kontentWidgets/kontent_carousel.dart';
 import 'package:kontent/kontentWidgets/kontent_change_password_dialog.dart';
 import 'package:kontent/kontentWidgets/kontent_user_image.dart';
+import 'package:standard_searchbar/old/standard_searchbar.dart';
+
+List<Content> recentlyViewed = [];
 
 class KontentAccountPageBodyWidget extends StatefulWidget {
   const KontentAccountPageBodyWidget({super.key});
@@ -46,11 +52,37 @@ class _KontentAccountPageBodyWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: MediaQuery.of(context).orientation == Orientation.portrait
-          ? _buildPortraitLayout()
-          : _buildLandscapeLayout(),
-    );
+    return FutureBuilder(
+        future: getPage('testpage'),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            //in attesa
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            //errore
+            return const Center(
+              child: Text('Errore durante la richiesta della pagina',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+            );
+          } else if (!snapshot.hasData || snapshot.data == null) {
+            return const Center(
+                child: Text('Pagina inesistente',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 30)));
+          }
+
+          kontent_page.Page page = snapshot.data!;
+          for (Carousel carousel in page.getCarousels) {
+            contents.addAll(carousel.items);
+          }
+          recentlyViewed = contents.take(12).toSet().toList();
+
+          return Scaffold(
+            body: MediaQuery.of(context).orientation == Orientation.portrait
+                ? _buildPortraitLayout()
+                : _buildLandscapeLayout(),
+          );
+        });
   }
 
   Widget _buildPortraitLayout() {
@@ -98,10 +130,8 @@ class _KontentAccountPageBodyWidgetState
                   title: 'Recently viewed',
                   type: '',
                   orientation: KontentCarouselType.vertical,
-                  items: contents
-                      .take(6)
-                      .toSet()
-                      .toList()), // just a mockup- no firabase integration
+                  items:
+                      recentlyViewed), // just a mockup- no firabase integration
             ),
             const SizedBox(height: 25),
             ElevatedButton(
@@ -162,7 +192,7 @@ class _KontentAccountPageBodyWidgetState
                   title: 'Recently viewed',
                   type: '',
                   orientation: KontentCarouselType.vertical,
-                  items: contents.take(6).toSet().toList()),
+                  items: recentlyViewed),
             ),
             const SizedBox(height: 25),
             ElevatedButton(
